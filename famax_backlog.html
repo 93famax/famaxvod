@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FamaxVOD — Mes jeux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07101f;--bg2:#0b1829;--bg3:#0f2040;
+  --blue:#3b8beb;--blue2:#63b3ff;--blue3:#1d6fd4;
+  --glow:rgba(59,139,235,0.22);
+  --border:rgba(99,179,255,0.18);--border2:rgba(99,179,255,0.08);
+  --text:#e8f2ff;--muted:#5a7fa8;--r:14px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 70% 50% at 15% 10%,rgba(29,111,212,0.18) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 85% 90%,rgba(59,139,235,0.12) 0%,transparent 60%);pointer-events:none}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.dot{position:absolute;border-radius:50%;background:rgba(99,179,255,0.45);animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) scale(0.5);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}
+nav{position:sticky;top:0;z-index:50;background:rgba(7,16,31,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border2);padding:0 28px}
+.nav-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;height:62px}
+.logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:19px;color:#fff;text-decoration:none;letter-spacing:-.01em;flex-shrink:0}
+.logo span{color:var(--blue2)}
+.nav-search{flex:1;max-width:460px;display:flex;align-items:center;gap:10px;background:rgba(59,139,235,0.07);border:1px solid var(--border);border-radius:40px;padding:0 16px;transition:border-color .2s,box-shadow .2s}
+.nav-search:focus-within{border-color:rgba(99,179,255,0.5);box-shadow:0 0 0 3px rgba(59,139,235,0.15)}
+.nav-search svg{opacity:.4;flex-shrink:0}
+.nav-search input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;height:40px}
+.nav-search input::placeholder{color:var(--muted)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn-admin{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;padding:8px 18px;border-radius:40px;cursor:pointer;border:1px solid var(--border);background:rgba(59,139,235,0.1);color:var(--blue2);transition:all .2s}
+.btn-admin:hover{background:rgba(59,139,235,0.2);box-shadow:0 0 18px var(--glow)}
+.badge-admin{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:40px;background:var(--blue);color:#fff}
+.hero{position:relative;z-index:1;padding:70px 28px 44px;text-align:center}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue2);margin-bottom:18px;opacity:.75}
+.hero-title{font-size:clamp(34px,5vw,60px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:#fff;margin-bottom:14px}
+.hero-title .hl{background:linear-gradient(90deg,var(--blue2),#a5cfff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:var(--muted);max-width:400px;margin:0 auto 36px;line-height:1.7}
+.hero-counts{display:inline-flex;gap:0;background:rgba(59,139,235,0.08);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.hc{padding:14px 28px;text-align:center}
+.hc+.hc{border-left:1px solid var(--border2)}
+.hc-n{font-size:26px;font-weight:800;color:var(--blue2);display:block;line-height:1}
+.hc-l{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:4px;display:block}
+.content{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 28px 60px}
+.search-bar{display:flex;gap:10px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.filter-pill{font-size:12px;font-weight:600;letter-spacing:.04em;padding:7px 16px;border-radius:40px;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--muted);transition:all .18s;font-family:'Outfit',sans-serif}
+.filter-pill:hover{border-color:var(--border);color:var(--text)}
+.filter-pill.on{border-color:var(--blue);background:rgba(59,139,235,0.15);color:var(--blue2)}
+.grid-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.game-card{position:relative;border-radius:var(--r);overflow:hidden;background:var(--bg3);border:1px solid var(--border2);cursor:pointer;display:block;text-decoration:none;aspect-ratio:2/3;transition:transform .32s cubic-bezier(0.23,1,0.32,1),border-color .28s,box-shadow .28s;will-change:transform}
+.game-card:hover{transform:translateY(-10px) scale(1.04);border-color:rgba(99,179,255,0.55);box-shadow:0 28px 56px rgba(0,0,0,.65),0 0 0 1px rgba(99,179,255,0.2),0 0 40px rgba(59,139,235,0.18)}
+.game-card:active{transform:translateY(-5px) scale(1.01);transition-duration:.1s}
+.game-card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .38s cubic-bezier(0.23,1,0.32,1)}
+.game-card:hover .game-card-img{transform:scale(1.07)}
+.game-card-img.no-img{background:linear-gradient(135deg,#0b1829,#0f2040);display:flex;align-items:center;justify-content:center;font-size:36px}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,16,31,.95) 0%,rgba(7,16,31,.35) 55%,transparent 100%);transition:opacity .25s}
+.game-card:hover .card-overlay{opacity:.8}
+.card-shine{position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,179,255,0.07) 0%,transparent 55%);pointer-events:none;opacity:0;transition:opacity .28s}
+.game-card:hover .card-shine{opacity:1}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:14px 12px 12px}
+.card-title{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:3px;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.card-meta{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.card-yt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:46px;height:46px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;transition:transform .28s cubic-bezier(0.23,1,0.32,1),opacity .25s,box-shadow .25s;opacity:0}
+.game-card:hover .card-yt{transform:translate(-50%,-50%) scale(1);opacity:1;box-shadow:0 0 24px var(--glow)}
+.card-yt svg{margin-left:3px}
+.no-vod-tag{position:absolute;top:8px;left:8px;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:99px;background:rgba(0,0,0,.55);color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(4px)}
+.vod-tag{position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(59,139,235,0.75);color:#fff;backdrop-filter:blur(4px)}
+.card-rm{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .15s;z-index:10;line-height:1}
+body.adm .card-rm{display:flex}
+.card-rm:hover{background:rgba(220,50,50,.85)}
+.yt-edit{position:absolute;bottom:0;left:0;right:0;z-index:15;background:rgba(7,16,31,0.94);backdrop-filter:blur(10px);padding:8px;transform:translateY(100%);transition:transform .22s cubic-bezier(0.23,1,0.32,1)}
+body.adm .game-card:hover .yt-edit{transform:translateY(0)}
+.yt-edit input{width:100%;height:30px;font-size:11px;background:rgba(59,139,235,0.1);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:0 8px;font-family:'Outfit',sans-serif;outline:none}
+.yt-save{width:100%;margin-top:4px;font-size:10px;font-weight:700;padding:5px;border-radius:6px;background:rgba(59,139,235,0.2);border:1px solid var(--border);color:var(--blue2);cursor:pointer;font-family:'Outfit',sans-serif;transition:background .15s}
+.yt-save:hover{background:rgba(59,139,235,0.35)}
+.empty{text-align:center;padding:80px 24px;color:var(--muted)}
+.empty-icon{font-size:44px;margin-bottom:16px;opacity:.35;display:block}
+.empty h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty p{font-size:14px;line-height:1.6}
+
+/* PANEL */
+.panel-bg{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .25s}
+.panel-bg.open{opacity:1;pointer-events:all}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:520px;padding:32px;box-shadow:0 40px 100px rgba(0,0,0,.8);transform:translateY(12px);transition:transform .28s cubic-bezier(0.23,1,0.32,1)}
+.panel-bg.open .panel{transform:translateY(0)}
+.panel h2{font-size:19px;font-weight:800;color:var(--blue2);margin-bottom:6px}
+.panel p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6}
+.field{margin-bottom:14px}
+.field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:7px}
+.field input,.field textarea{width:100%;background:rgba(59,139,235,0.07);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:0 14px;outline:none;transition:border-color .2s,box-shadow .2s;height:44px}
+.field input:focus,.field textarea:focus{border-color:rgba(99,179,255,0.55);box-shadow:0 0 0 3px rgba(59,139,235,0.15)}
+.field input::placeholder{color:var(--muted)}
+.results-box{max-height:240px;overflow-y:auto;margin-top:8px;border:1px solid var(--border2);border-radius:10px;background:rgba(59,139,235,0.04)}
+.results-box::-webkit-scrollbar{width:4px}
+.results-box::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.res-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border2);transition:background .15s}
+.res-item:last-child{border-bottom:none}
+.res-item:hover{background:rgba(59,139,235,0.1)}
+.res-thumb{width:36px;height:48px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
+.res-info{flex:1;min-width:0}
+.res-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.res-btn{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:40px;background:rgba(59,139,235,0.15);border:1px solid var(--border);color:var(--blue2);cursor:pointer;flex-shrink:0;transition:all .15s;font-family:'Outfit',sans-serif}
+.res-btn:hover{background:rgba(59,139,235,0.3)}
+.res-btn.added{background:rgba(255,255,255,.05);border-color:var(--border2);color:var(--muted);cursor:default}
+
+/* GITHUB CONFIG */
+.gh-box{background:rgba(59,139,235,0.06);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+.gh-box h3{font-size:13px;font-weight:700;color:var(--blue2);margin-bottom:10px}
+.gh-row{display:flex;gap:8px;margin-bottom:8px}
+.gh-row:last-child{margin-bottom:0}
+.gh-row input{flex:1;height:38px;font-size:13px}
+.gh-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+.gh-note a{color:var(--blue2)}
+
+.panel-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+.btn-close{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:40px;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--muted);transition:all .18s}
+.btn-close:hover{border-color:var(--border);color:var(--text)}
+.btn-primary{font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;padding:11px 28px;border-radius:40px;cursor:pointer;background:var(--blue);border:none;color:#fff;transition:all .2s}
+.btn-primary:hover{box-shadow:0 0 28px rgba(59,139,235,0.5);transform:translateY(-1px)}
+.err{font-size:12px;color:#f07070;margin-top:6px}
+.suc{font-size:12px;color:#5de8a0;margin-top:6px}
+
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;padding:11px 22px;border-radius:40px;box-shadow:0 8px 32px rgba(0,0,0,.5);opacity:0;transition:all .25s;pointer-events:none;z-index:200;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--blue2);border-radius:50%;animation:s .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes s{to{transform:rotate(360deg)}}
+.saving-overlay{position:fixed;inset:0;z-index:300;background:rgba(7,16,31,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.saving-overlay.show{opacity:1;pointer-events:all}
+.saving-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px 32px;text-align:center;font-size:14px;font-weight:600;color:var(--blue2)}
+@media(max-width:580px){.games-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}.hero-title{font-size:30px}.hc{padding:12px 18px}}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">Famax<span>VOD</span></a>
+    <div class="nav-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="viewer-search" placeholder="Rechercher un jeu…" autocomplete="off"/>
+    </div>
+    <div class="nav-right">
+      <button class="btn-admin" id="admin-btn" onclick="openPanel()" style="display:none">⚡ Admin</button>
+      <span class="badge-admin" id="admin-badge" style="display:none">⚡ Admin</span>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Chaîne FamaxVOD</div>
+  <h1 class="hero-title">Tous mes jeux<br><span class="hl">d'histoire</span></h1>
+  <p class="hero-sub">Clique sur un jeu pour voir mes VODs YouTube</p>
+  <div class="hero-counts">
+    <div class="hc"><span class="hc-n" id="cnt-total">0</span><span class="hc-l">Jeux</span></div>
+    <div class="hc"><span class="hc-n" id="cnt-vod">0</span><span class="hc-l">Avec VODs</span></div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="search-bar">
+    <button class="filter-pill on" onclick="setFilter('all',this)">Tous</button>
+    <button class="filter-pill" onclick="setFilter('vod',this)">▶ Avec VODs</button>
+  </div>
+  <div class="grid-label" id="grid-label">Bibliothèque</div>
+  <div class="games-grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <span class="empty-icon">🎮</span>
+    <h3 id="empty-title">Bibliothèque vide</h3>
+    <p id="empty-body">Aucun jeu ajouté pour l'instant.</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="panel-bg" id="panel-bg">
+  <div class="panel">
+    <!-- PIN -->
+    <div id="v-pin">
+      <h2>Accès admin</h2>
+      <p>Entre ton PIN pour gérer ta bibliothèque.</p>
+      <div class="field"><label>PIN</label><input type="password" id="pin" placeholder="••••" onkeydown="if(event.key==='Enter')tryLogin()"/></div>
+      <div class="err" id="pin-err" style="display:none">PIN incorrect</div>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button class="btn-primary" onclick="tryLogin()">Entrer</button>
+        <button class="btn-close" onclick="closePanel()">Annuler</button>
+      </div>
+    </div>
+    <!-- ADMIN -->
+    <div id="v-admin" style="display:none">
+      <h2>Ajouter un jeu</h2>
+      <p>Les jeux sont sauvegardés sur GitHub — permanents sur tous tes appareils.</p>
+
+      <!-- GitHub config -->
+      <div class="gh-box">
+        <h3>🔧 Config GitHub <span id="gh-status" style="font-size:11px;font-weight:400;color:var(--muted)"></span></h3>
+        <div class="gh-row">
+          <input type="text" id="gh-user" placeholder="Ton pseudo GitHub" oninput="saveGhConfig()"/>
+          <input type="text" id="gh-repo" placeholder="Nom du repo" oninput="saveGhConfig()"/>
+        </div>
+        <div class="gh-row">
+          <input type="password" id="gh-token" placeholder="GitHub Token (ghp_…)" oninput="saveGhConfig()"/>
+        </div>
+        <div class="gh-note">
+          Crée un token sur <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> → sélectionne <strong>repo</strong> → Generate. Il est stocké uniquement dans ton navigateur.
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Rechercher un jeu</label>
+        <input type="text" id="gsearch" placeholder="Ex: Kingdom Come, Assassin's Creed…" autocomplete="off"/>
+        <div class="results-box" id="results" style="display:none"></div>
+      </div>
+      <div class="field" id="yt-wrap" style="display:none">
+        <label>Lien playlist YouTube (optionnel)</label>
+        <input type="text" id="yt-input" placeholder="https://youtube.com/playlist?list=…"/>
+      </div>
+      <div class="panel-footer">
+        <button class="btn-close" onclick="closePanel()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVING OVERLAY -->
+<div class="saving-overlay" id="saving-overlay">
+  <div class="saving-box"><span class="spin"></span> Sauvegarde sur GitHub…</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PIN = "1234";
+const RAWG = "d95a5a89a20f49af87ad68d9fb5fa427";
+const DATA_FILE = "data.json";
+
+let games = [], ytLinks = {}, isAdmin = false, filterMode = "all", q = "";
+let searchT = null, cache = {};
+
+/* ── PARTICLES ── */
+(function(){
+  const wrap = document.getElementById("particles");
+  for(let i=0;i<18;i++){
+    const d=document.createElement("div"); d.className="dot";
+    const sz=Math.random()*3+1.5;
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${8+Math.random()*14}s;animation-delay:${Math.random()*12}s;opacity:${.2+Math.random()*.4}`;
+    wrap.appendChild(d);
+  }
+})();
+
+/* ── GITHUB CONFIG (stored locally in browser) ── */
+function getGhConfig(){
+  return {
+    user:  localStorage.getItem("gh_user")||"",
+    repo:  localStorage.getItem("gh_repo")||"",
+    token: localStorage.getItem("gh_token")||""
+  };
+}
+function saveGhConfig(){
+  localStorage.setItem("gh_user",  document.getElementById("gh-user").value.trim());
+  localStorage.setItem("gh_repo",  document.getElementById("gh-repo").value.trim());
+  localStorage.setItem("gh_token", document.getElementById("gh-token").value.trim());
+  updateGhStatus();
+}
+function loadGhConfig(){
+  const c=getGhConfig();
+  document.getElementById("gh-user").value  = c.user;
+  document.getElementById("gh-repo").value  = c.repo;
+  document.getElementById("gh-token").value = c.token;
+  updateGhStatus();
+}
+function updateGhStatus(){
+  const c=getGhConfig();
+  const el=document.getElementById("gh-status");
+  if(c.user&&c.repo&&c.token) el.textContent="✅ Connecté";
+  else el.textContent="⚠️ Non configuré";
+}
+
+/* ── GITHUB API ── */
+async function ghRead(){
+  const c=getGhConfig();
+  if(!c.user||!c.repo||!c.token) return null;
+  const url=`https://api.github.com/repos/${c.user}/${c.repo}/contents/${DATA_FILE}`;
+  const r=await fetch(url,{headers:{"Authorization":"token "+c.token,"Accept":"application/vnd.github.v3+json"}});
+  if(r.status===404) return {content:null,sha:null};
+  if(!r.ok) throw new Error("GitHub read error "+r.status);
+  const d=await r.json();
+  const content=JSON.parse(atob(d.content.replace(/\n/g,"")));
+  return {content, sha:d.sha};
+}
+
+async function ghWrite(data, sha){
+  const c=getGhConfig();
+  const url=`https://api.github.com/repos/${c.user}/${c.repo}/contents/${DATA_FILE}`;
+  const body={
+    message: sha?"Update games list":"Init games list",
+    content: btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),
+    ...(sha?{sha}:{})
+  };
+  const r=await fetch(url,{method:"PUT",headers:{"Authorization":"token "+c.token,"Accept":"application/vnd.github.v3+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error("GitHub write error "+r.status);
+  const d=await r.json();
+  return d.content.sha;
+}
+
+/* ── LOAD DATA ── */
+async function load(){
+  /* Always try GitHub raw first (works for viewers without token) */
+  const c=getGhConfig();
+  let loaded=false;
+  if(c.user&&c.repo){
+    try{
+      const url=`https://raw.githubusercontent.com/${c.user}/${c.repo}/main/${DATA_FILE}?t=${Date.now()}`;
+      const r=await fetch(url);
+      if(r.ok){
+        const d=await r.json();
+        games=d.games||[]; ytLinks=d.yt||{};
+        loaded=true;
+      }
+    }catch(e){}
+  }
+  if(!loaded){
+    /* fallback localStorage (first time before GitHub setup) */
+    try{const d=JSON.parse(localStorage.getItem("famax_local")||"null");if(d){games=d.games||[];ytLinks=d.yt||{};}}catch(e){}
+  }
+  render();
+}
+
+let currentSha=null;
+async function save(){
+  showSaving(true);
+  const data={games,yt:ytLinks};
+  try{
+    const c=getGhConfig();
+    if(!c.user||!c.repo||!c.token) throw new Error("no config");
+    /* get current sha */
+    const r=await ghRead();
+    currentSha=r?r.sha:null;
+    currentSha=await ghWrite(data,currentSha);
+    showToast("✅ Sauvegardé sur GitHub !");
+  }catch(e){
+    /* fallback to localStorage */
+    localStorage.setItem("famax_local",JSON.stringify(data));
+    showToast("⚠️ Sauvegarde locale (configure GitHub)");
+  }
+  showSaving(false);
+}
+
+function showSaving(v){document.getElementById("saving-overlay").classList.toggle("show",v)}
+
+/* ── AUTH ── */
+function tryLogin(){
+  if(document.getElementById("pin").value===PIN){
+    isAdmin=true;
+    document.getElementById("v-pin").style.display="none";
+    document.getElementById("v-admin").style.display="block";
+    document.getElementById("yt-wrap").style.display="block";
+    document.getElementById("admin-btn").style.display="none";
+    document.getElementById("admin-badge").style.display="inline-block";
+    document.body.classList.add("adm");
+    loadGhConfig();
+  } else {
+    document.getElementById("pin-err").style.display="block";
+    setTimeout(()=>document.getElementById("pin-err").style.display="none",2200);
+  }
+}
+function openPanel(){document.getElementById("panel-bg").classList.add("open")}
+function closePanel(){document.getElementById("panel-bg").classList.remove("open")}
+document.getElementById("panel-bg").addEventListener("click",function(e){if(e.target===this)closePanel();});
+
+/* ── RAWG ── */
+document.getElementById("gsearch").addEventListener("input",function(){
+  const v=this.value.trim(); clearTimeout(searchT);
+  const box=document.getElementById("results");
+  if(v.length<2){box.style.display="none";return;}
+  box.style.display="block";
+  box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px"><span class="spin"></span>Recherche…</div>`;
+  searchT=setTimeout(async()=>{
+    try{
+      const r=await fetch(`https://api.rawg.io/api/games?key=${RAWG}&search=${encodeURIComponent(v)}&page_size=8`);
+      const d=await r.json();
+      const res=(d.results||[]).map(g=>({id:String(g.id),name:g.name,year:g.released?g.released.slice(0,4):"—",cover:g.background_image||null,genres:(g.genres||[]).map(x=>x.name)}));
+      if(!res.length){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat</div>`;return;}
+      cache={};res.forEach(g=>cache[g.id]=g);
+      const ids=new Set(games.map(g=>g.id));
+      box.innerHTML=res.map(g=>{
+        const has=ids.has(g.id);
+        return `<div class="res-item">
+          ${g.cover?`<img class="res-thumb" src="${g.cover}" alt="" loading="lazy"/>`:`<div class="res-thumb"></div>`}
+          <div class="res-info"><div class="res-name">${g.name}</div><div class="res-sub">${g.genres.slice(0,2).join(", ")||"—"} · ${g.year}</div></div>
+          <button class="res-btn${has?" added":""}" onclick="${has?"":"addGame('"+g.id+"')"}">${has?"Ajouté":"+ Ajouter"}</button>
+        </div>`;
+      }).join("");
+    }catch(e){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Erreur réseau</div>`;}
+  },380);
+});
+
+async function addGame(id){
+  const g=cache[id];if(!g)return;
+  if(games.find(x=>x.id===id))return;
+  const yt=document.getElementById("yt-input").value.trim();
+  games.unshift(g);
+  if(yt)ytLinks[id]=yt;
+  /* update button instantly */
+  document.querySelectorAll(".res-item").forEach(item=>{
+    if(item.querySelector(".res-name")?.textContent===g.name){
+      const btn=item.querySelector(".res-btn");
+      btn.textContent="Ajouté";btn.classList.add("added");btn.onclick=null;
+    }
+  });
+  render();
+  await save();
+}
+
+/* ── FILTER & SEARCH ── */
+function setFilter(f,el){filterMode=f;document.querySelectorAll(".filter-pill").forEach(p=>p.classList.remove("on"));if(el)el.classList.add("on");render();}
+document.getElementById("viewer-search").addEventListener("input",function(){q=this.value.trim().toLowerCase();render();});
+
+/* ── RENDER ── */
+function render(){
+  let list=[...games];
+  if(q)list=list.filter(g=>g.name.toLowerCase().includes(q)||(g.genres||[]).some(x=>x.toLowerCase().includes(q)));
+  if(filterMode==="vod")list=list.filter(g=>ytLinks[g.id]);
+  document.getElementById("cnt-total").textContent=games.length;
+  document.getElementById("cnt-vod").textContent=games.filter(g=>ytLinks[g.id]).length;
+  document.getElementById("grid-label").textContent=`Bibliothèque · ${list.length} jeu${list.length>1?"x":""}`;
+  const grid=document.getElementById("grid"),emp=document.getElementById("empty");
+  if(!list.length){
+    grid.innerHTML="";emp.style.display="block";
+    document.getElementById("empty-title").textContent=games.length===0?"Bibliothèque vide":"Aucun résultat";
+    document.getElementById("empty-body").textContent=games.length===0?"Aucun jeu ajouté pour l'instant.":"Essaie une autre recherche.";
+    return;
+  }
+  emp.style.display="none";
+  grid.innerHTML=list.map(g=>{
+    const yt=ytLinks[g.id]||"",hasYt=!!yt;
+    return `<a class="game-card" ${hasYt?`href="${yt}" target="_blank" rel="noopener"`:'href="#"'}
+       ${!hasYt&&!isAdmin?`onclick="event.preventDefault();showToast('Pas de VOD pour ce jeu')"`:""} data-id="${g.id}">
+      ${g.cover?`<img class="game-card-img" src="${g.cover}" alt="${g.name}" loading="lazy"/>`:`<div class="game-card-img no-img">🎮</div>`}
+      <div class="card-overlay"></div><div class="card-shine"></div>
+      ${hasYt?`<div class="vod-tag">▶ VODs</div>`:`<div class="no-vod-tag">Bientôt</div>`}
+      <div class="card-info">
+        <div class="card-title">${g.name}</div>
+        <div class="card-meta">${g.year}${g.genres&&g.genres[0]?" · "+g.genres[0]:""}</div>
+      </div>
+      <div class="card-yt"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      ${isAdmin?`
+      <button class="card-rm" onclick="event.preventDefault();event.stopPropagation();rmGame('${g.id}')" title="Retirer">✕</button>
+      <div class="yt-edit" onclick="event.preventDefault();event.stopPropagation()">
+        <input type="text" value="${yt}" placeholder="Lien playlist YouTube…" onchange="saveYt('${g.id}',this.value)"/>
+        <button class="yt-save" onclick="saveYt('${g.id}',this.previousElementSibling.value)">Enregistrer ▶</button>
+      </div>`:""}
+    </a>`;
+  }).join("");
+
+  /* 3D TILT */
+  grid.querySelectorAll(".game-card").forEach(card=>{
+    card.addEventListener("mousemove",function(e){
+      const r=this.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      this.style.transform=`translateY(-10px) scale(1.04) rotateX(${-y*7}deg) rotateY(${x*7}deg)`;
+    });
+    card.addEventListener("mouseleave",function(){this.style.transform="";});
+  });
+}
+
+async function rmGame(id){games=games.filter(g=>g.id!==id);render();await save();showToast("🗑️ Jeu retiré");}
+async function saveYt(id,val){val=val.trim();if(val)ytLinks[id]=val;else delete ytLinks[id];render();await save();}
+
+let toastT;
+function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2800);}
+
+load();
+if(window.location.search.includes("admin")){
+  document.getElementById("admin-btn").style.display="inline-block";
+}
+</script>
+</body>
+</html>
