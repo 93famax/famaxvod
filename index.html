@@ -213,13 +213,26 @@ body.adm .game-card:hover .yt-edit{transform:translateY(0)}
       </div>
 
       <div class="field">
-        <label>Rechercher un jeu</label>
-        <input type="text" id="gsearch" placeholder="Ex: Kingdom Come, Assassin's Creed…" autocomplete="off"/>
-        <div class="results-box" id="results" style="display:none"></div>
+        <label>Nom du jeu</label>
+        <input type="text" id="game-name" placeholder="Ex: Red Dead Redemption 2"/>
       </div>
-      <div class="field" id="yt-wrap" style="display:none">
-        <label>Lien playlist YouTube (optionnel)</label>
+      <div class="field">
+        <label>URL de l'affiche</label>
+        <input type="text" id="game-cover" placeholder="https://…image.jpg" oninput="previewCover()"/>
+        <div id="cover-preview" style="margin-top:8px;display:none">
+          <img id="cover-img" style="width:80px;height:110px;object-fit:cover;border-radius:8px;border:1px solid var(--border)" src="" alt=""/>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">
+          💡 Va sur Google Images → clique sur une affiche → clic droit → <strong style="color:var(--blue2)">Copier l'adresse de l'image</strong>
+        </div>
+      </div>
+      <div class="field">
+        <label>Lien playlist YouTube</label>
         <input type="text" id="yt-input" placeholder="https://youtube.com/playlist?list=…"/>
+      </div>
+      <div style="margin-top:6px">
+        <button class="btn-primary" onclick="addGameManual()" style="width:100%;justify-content:center">+ Ajouter ce jeu</button>
+        <div class="err" id="add-err" style="display:none;margin-top:8px">Remplis au moins le nom du jeu</div>
       </div>
       <div class="panel-footer">
         <button class="btn-close" onclick="closePanel()">Fermer</button>
@@ -242,6 +255,63 @@ const DATA_FILE = "data.json";
 
 let games = [], ytLinks = {}, isAdmin = false, filterMode = "all", q = "";
 let searchT = null, cache = {};
+
+function previewCover(url){
+  const img = document.getElementById("cover-preview");
+  if(url.startsWith("http")){img.src=url;img.style.display="block";}
+  else{img.style.display="none";}
+}
+
+function addGameManual(){
+  const name = document.getElementById("game-name").value.trim();
+  const cover = document.getElementById("game-cover").value.trim();
+  const yt = document.getElementById("yt-input").value.trim();
+  const err = document.getElementById("add-err");
+  if(!name){err.textContent="Entre le nom du jeu";err.style.display="block";setTimeout(()=>err.style.display="none",2000);return;}
+  if(games.find(g=>g.name.toLowerCase()===name.toLowerCase())){err.textContent="Ce jeu est déjà dans la liste";err.style.display="block";setTimeout(()=>err.style.display="none",2500);return;}
+  const id = "manual_"+Date.now();
+  const game = {id, name, cover:cover||null, genres:[], year:""};
+  games.unshift(game);
+  if(yt) ytLinks[id]=yt;
+  document.getElementById("game-name").value="";
+  document.getElementById("game-cover").value="";
+  document.getElementById("yt-input").value="";
+  document.getElementById("cover-preview").style.display="none";
+  render();
+  save();
+  showToast("✅ "+name+" ajouté !");
+}
+
+function previewCover(){
+  const url = document.getElementById("game-cover").value.trim();
+  const prev = document.getElementById("cover-preview");
+  const img = document.getElementById("cover-img");
+  if(url){
+    img.src = url;
+    prev.style.display = "block";
+  } else {
+    prev.style.display = "none";
+  }
+}
+
+async function addGameManual(){
+  const name = document.getElementById("game-name").value.trim();
+  const cover = document.getElementById("game-cover").value.trim();
+  const yt = document.getElementById("yt-input").value.trim();
+  if(!name){ document.getElementById("add-err").style.display="block"; setTimeout(()=>document.getElementById("add-err").style.display="none",2000); return; }
+  const id = "manual_"+Date.now();
+  const g = { id, name, cover: cover||null, genres:[], year:"" };
+  games.unshift(g);
+  if(yt) ytLinks[id] = yt;
+  // reset fields
+  document.getElementById("game-name").value = "";
+  document.getElementById("game-cover").value = "";
+  document.getElementById("yt-input").value = "";
+  document.getElementById("cover-preview").style.display = "none";
+  render();
+  await save();
+  showToast("✅ "+name+" ajouté !");
+}
 
 /* ── PARTICLES ── */
 (function(){
@@ -374,80 +444,9 @@ function openPanel(){document.getElementById("panel-bg").classList.add("open")}
 function closePanel(){document.getElementById("panel-bg").classList.remove("open")}
 document.getElementById("panel-bg").addEventListener("click",function(e){if(e.target===this)closePanel();});
 
-/* ── SEARCH via Steam (no CORS) ── */
-async function searchGames(q){
-  // Steam suggest API — works from browser, no CORS, fuzzy search
-  const url = `https://store.steampowered.com/search/suggest?term=${encodeURIComponent(q)}&f=games&cc=FR&realm=1&l=french`;
-  const r = await fetch(url);
-  const html = await r.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const items = doc.querySelectorAll(".match");
-  const results = [];
-  items.forEach(item => {
-    const appid = item.dataset.ds_appid || item.getAttribute("data-ds-appid");
-    const name = item.querySelector(".match_name")?.textContent?.trim();
-    const price = item.querySelector(".match_price")?.textContent?.trim()||"";
-    if(!appid || !name) return;
-    results.push({
-      id: "steam_"+appid,
-      name,
-      year: price,
-      cover: `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg`,
-      cover_fallback: `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`,
-      genres: [],
-      appid
-    });
-  });
-  return results.slice(0,8);
-}
 
-document.getElementById("gsearch").addEventListener("input",function(){
-  const v=this.value.trim(); clearTimeout(searchT);
-  const box=document.getElementById("results");
-  if(v.length<1){box.style.display="none";return;}
-  box.style.display="block";
-  box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px"><span class="spin"></span>Recherche…</div>`;
-  searchT=setTimeout(async()=>{
-    try{
-      const res = await searchGames(v);
-      if(!res.length){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat — essaie en anglais</div>`;return;}
-      cache={};res.forEach(g=>cache[g.id]=g);
-      const ids=new Set(games.map(g=>g.id));
-      box.innerHTML=res.map(g=>{
-        const has=ids.has(g.id);
-        return `<div class="res-item">
-          <img class="res-thumb" src="${g.cover}" onerror="this.src='${g.cover_fallback}'" alt="" loading="lazy"/>
-          <div class="res-info">
-            <div class="res-name">${g.name}</div>
-            <div class="res-sub">Steam · ${g.year}</div>
-          </div>
-          <button class="res-btn${has?" added":""}" onclick="${has?"":"addGame('"+g.id+"')"}">${has?"Ajouté":"+ Ajouter"}</button>
-        </div>`;
-      }).join("");
-    }catch(e){
-      console.error(e);
-      box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Erreur réseau</div>`;
-    }
-  },300);
-});
 
-async function addGame(id){
-  const g=cache[id];if(!g)return;
-  if(games.find(x=>x.id===id))return;
-  const yt=document.getElementById("yt-input").value.trim();
-  games.unshift(g);
-  if(yt)ytLinks[id]=yt;
-  /* update button instantly */
-  document.querySelectorAll(".res-item").forEach(item=>{
-    if(item.querySelector(".res-name")?.textContent===g.name){
-      const btn=item.querySelector(".res-btn");
-      btn.textContent="Ajouté";btn.classList.add("added");btn.onclick=null;
-    }
-  });
-  render();
-  await save();
-}
+
 
 /* ── FILTER & SEARCH ── */
 function setFilter(f,el){filterMode=f;document.querySelectorAll(".filter-pill").forEach(p=>p.classList.remove("on"));if(el)el.classList.add("on");render();}
