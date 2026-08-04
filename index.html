@@ -374,48 +374,62 @@ function openPanel(){document.getElementById("panel-bg").classList.add("open")}
 function closePanel(){document.getElementById("panel-bg").classList.remove("open")}
 document.getElementById("panel-bg").addEventListener("click",function(e){if(e.target===this)closePanel();});
 
-/* ── SEARCH via OpenSearch Wikipedia + Steam cover ── */
+/* ── SEARCH via Steam (no CORS) ── */
 async function searchGames(q){
-  // Use Giant Bomb API via allorigins proxy — has covers, no CORS
-  // Fallback: use Steam search + store artwork
-  const proxy = "https://api.allorigins.win/get?url=";
-  const steamUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(q)}&l=fr&cc=FR`;
-  const r = await fetch(proxy + encodeURIComponent(steamUrl));
-  const raw = await r.json();
-  const d = JSON.parse(raw.contents);
-  return (d.items||[]).slice(0,8).map(g=>({
-    id: "steam_"+g.id,
-    name: g.name,
-    year: g.released||"—",
-    cover: `https://cdn.cloudflare.steamstatic.com/steam/apps/${g.id}/library_600x900.jpg`,
-    cover_fallback: `https://cdn.cloudflare.steamstatic.com/steam/apps/${g.id}/header.jpg`,
-    genres: g.metascore ? ["Score: "+g.metascore] : [],
-    appid: g.id
-  }));
+  // Steam suggest API — works from browser, no CORS, fuzzy search
+  const url = `https://store.steampowered.com/search/suggest?term=${encodeURIComponent(q)}&f=games&cc=FR&realm=1&l=french`;
+  const r = await fetch(url);
+  const html = await r.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const items = doc.querySelectorAll(".match");
+  const results = [];
+  items.forEach(item => {
+    const appid = item.dataset.ds_appid || item.getAttribute("data-ds-appid");
+    const name = item.querySelector(".match_name")?.textContent?.trim();
+    const price = item.querySelector(".match_price")?.textContent?.trim()||"";
+    if(!appid || !name) return;
+    results.push({
+      id: "steam_"+appid,
+      name,
+      year: price,
+      cover: `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg`,
+      cover_fallback: `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`,
+      genres: [],
+      appid
+    });
+  });
+  return results.slice(0,8);
 }
 
 document.getElementById("gsearch").addEventListener("input",function(){
   const v=this.value.trim(); clearTimeout(searchT);
   const box=document.getElementById("results");
-  if(v.length<2){box.style.display="none";return;}
+  if(v.length<1){box.style.display="none";return;}
   box.style.display="block";
   box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px"><span class="spin"></span>Recherche…</div>`;
   searchT=setTimeout(async()=>{
     try{
       const res = await searchGames(v);
-      if(!res.length){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat</div>`;return;}
+      if(!res.length){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat — essaie en anglais</div>`;return;}
       cache={};res.forEach(g=>cache[g.id]=g);
       const ids=new Set(games.map(g=>g.id));
       box.innerHTML=res.map(g=>{
         const has=ids.has(g.id);
         return `<div class="res-item">
-          <img class="res-thumb" src="${g.cover}" onerror="this.src='${g.cover_fallback||g.cover}'" alt="" loading="lazy"/>
-          <div class="res-info"><div class="res-name">${g.name}</div><div class="res-sub">${g.year}</div></div>
+          <img class="res-thumb" src="${g.cover}" onerror="this.src='${g.cover_fallback}'" alt="" loading="lazy"/>
+          <div class="res-info">
+            <div class="res-name">${g.name}</div>
+            <div class="res-sub">Steam · ${g.year}</div>
+          </div>
           <button class="res-btn${has?" added":""}" onclick="${has?"":"addGame('"+g.id+"')"}">${has?"Ajouté":"+ Ajouter"}</button>
         </div>`;
       }).join("");
-    }catch(e){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Erreur réseau</div>`;}
-  },420);
+    }catch(e){
+      console.error(e);
+      box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Erreur réseau</div>`;
+    }
+  },300);
 });
 
 async function addGame(id){
