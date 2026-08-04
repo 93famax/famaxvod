@@ -1,6 +1,15 @@
 {
   "games": [
     {
+      "id": "steam_2668510",
+      "name": "Red Dead Redemption",
+      "year": "—",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2668510/library_600x900.jpg",
+      "cover_fallback": "https://cdn.cloudflare.steamstatic.com/steam/apps/2668510/header.jpg",
+      "genres": [],
+      "appid": 2668510
+    },
+    {
       "id": "steam_1174180",
       "name": "Red Dead Redemption 2",
       "year": "—",
