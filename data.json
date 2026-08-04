@@ -1,0 +1,16 @@
+{
+  "games": [
+    {
+      "id": "steam_1174180",
+      "name": "Red Dead Redemption 2",
+      "year": "—",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg",
+      "cover_fallback": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg",
+      "genres": [
+        "Score: 93"
+      ],
+      "appid": 1174180
+    }
+  ],
+  "yt": {}
+}
