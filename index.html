@@ -237,7 +237,9 @@ body.adm .game-card:hover .yt-edit{transform:translateY(0)}
 
 <script>
 const PIN = "1234";
-const RAWG = "d95a5a89a20f49af87ad68d9fb5fa427";
+const IGDB_CLIENT_ID = "bq2hblmhzg5ui7b76rvh29lib5q54u";
+const IGDB_CLIENT_SECRET = "39216o2j67pc32299kbsz6sihlkm5r";
+let igdbToken = null;
 const DATA_FILE = "data.json";
 
 let games = [], ytLinks = {}, isAdmin = false, filterMode = "all", q = "";
@@ -374,7 +376,40 @@ function openPanel(){document.getElementById("panel-bg").classList.add("open")}
 function closePanel(){document.getElementById("panel-bg").classList.remove("open")}
 document.getElementById("panel-bg").addEventListener("click",function(e){if(e.target===this)closePanel();});
 
-/* ── RAWG ── */
+/* ── IGDB ── */
+async function getIgdbToken(){
+  if(igdbToken) return igdbToken;
+  const r = await fetch("https://id.twitch.tv/oauth2/token",{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`client_id=${IGDB_CLIENT_ID}&client_secret=${IGDB_CLIENT_SECRET}&grant_type=client_credentials`
+  });
+  const d = await r.json();
+  igdbToken = d.access_token;
+  return igdbToken;
+}
+
+async function searchIgdb(q){
+  const token = await getIgdbToken();
+  const r = await fetch("https://api.igdb.com/v4/games",{
+    method:"POST",
+    headers:{
+      "Client-ID": IGDB_CLIENT_ID,
+      "Authorization": "Bearer "+token,
+      "Content-Type": "text/plain"
+    },
+    body:`search "${q}"; fields name,first_release_date,genres.name,cover.image_id; limit 8; where version_parent = null;`
+  });
+  const data = await r.json();
+  return (data||[]).map(g=>({
+    id: String(g.id),
+    name: g.name,
+    year: g.first_release_date ? new Date(g.first_release_date*1000).getFullYear().toString() : "—",
+    cover: g.cover ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${g.cover.image_id}.jpg` : null,
+    genres: (g.genres||[]).map(x=>x.name)
+  }));
+}
+
 document.getElementById("gsearch").addEventListener("input",function(){
   const v=this.value.trim(); clearTimeout(searchT);
   const box=document.getElementById("results");
@@ -383,9 +418,7 @@ document.getElementById("gsearch").addEventListener("input",function(){
   box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px"><span class="spin"></span>Recherche…</div>`;
   searchT=setTimeout(async()=>{
     try{
-      const r=await fetch(`https://api.rawg.io/api/games?key=${RAWG}&search=${encodeURIComponent(v)}&page_size=8`);
-      const d=await r.json();
-      const res=(d.results||[]).map(g=>({id:String(g.id),name:g.name,year:g.released?g.released.slice(0,4):"—",cover:g.background_image||null,genres:(g.genres||[]).map(x=>x.name)}));
+      const res = await searchIgdb(v);
       if(!res.length){box.innerHTML=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat</div>`;return;}
       cache={};res.forEach(g=>cache[g.id]=g);
       const ids=new Set(games.map(g=>g.id));
