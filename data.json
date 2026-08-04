@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1785880815005",
+      "name": "Mafia the old country",
+      "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/3a17cd4420cb18ae2dd25416fb25653afb8cbffc0ad5808b.png",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1785880762349",
       "name": "Assassin's creed Origins",
       "cover": "https://www.gamecash.be/source/Articles%203/DCH7_zNXkAEkqc4.jpg",
@@ -43,6 +50,7 @@
     }
   ],
   "yt": {
-    "steam_2668510": "https://www.youtube.com/watch?v=sImI4TxErXU&list=PLHzl6eDYJfks&index=8"
+    "steam_2668510": "https://www.youtube.com/watch?v=sImI4TxErXU&list=PLHzl6eDYJfks&index=8",
+    "manual_1785880815005": "https://www.youtube.com/watch?v=SinYC742t4Y&list=PLRuGlQ-T23Yo&index=8"
   }
 }
