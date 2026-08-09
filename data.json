@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786301034725",
+      "name": "Superliminal",
+      "cover": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_Superliminal.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1785880852294",
       "name": "A way out",
       "cover": "https://image.api.playstation.com/cdn/EP0006/CUSA08004_00/uYjNSTuC1lpCeOLL7M6Gye9tUH28W8F3.png",
@@ -58,6 +65,7 @@
   ],
   "yt": {
     "steam_2668510": "https://www.youtube.com/watch?v=sImI4TxErXU&list=PLHzl6eDYJfks&index=8",
-    "manual_1785880815005": "https://www.youtube.com/watch?v=SinYC742t4Y&list=PLRuGlQ-T23Yo&index=8"
+    "manual_1785880815005": "https://www.youtube.com/watch?v=SinYC742t4Y&list=PLRuGlQ-T23Yo&index=8",
+    "manual_1786301034725": "https://www.youtube.com/watch?v=PWbrbyFr5c4&t=8678s"
   }
 }
