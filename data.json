@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786301070670",
+      "name": "viewfinder",
+      "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202507/1711/19e6a1c5304b7a4fa3c03eaa726cad6c336b124359cf590a.png",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786301034725",
       "name": "Superliminal",
       "cover": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_Superliminal.jpg",
@@ -66,6 +73,7 @@
   "yt": {
     "steam_2668510": "https://www.youtube.com/watch?v=sImI4TxErXU&list=PLHzl6eDYJfks&index=8",
     "manual_1785880815005": "https://www.youtube.com/watch?v=SinYC742t4Y&list=PLRuGlQ-T23Yo&index=8",
-    "manual_1786301034725": "https://www.youtube.com/watch?v=PWbrbyFr5c4&t=8678s"
+    "manual_1786301034725": "https://www.youtube.com/watch?v=PWbrbyFr5c4&t=8678s",
+    "manual_1786301070670": "https://www.youtube.com/watch?v=85IRGXZls9s&t=10s"
   }
 }
