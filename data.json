@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743181626",
+      "name": "Assassin's Creed Syndicate",
+      "cover": "https://cdn2.unrealengine.com/Diesel/productv2/assassins-creed-syndicate/home/ACS-STD-2560x1440-635b7b6c86f18730071426375e7c4fe0bd831ddd.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743133426",
       "name": "Mafia: Definitive Edition",
       "cover": "https://gaming-cdn.com/images/products/6970/orig/mafia-definitive-edition-definitive-edition-pc-jeu-steam-europe-cover.jpg?v=1704899872",
