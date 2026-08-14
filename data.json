@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743133426",
+      "name": "Mafia: Definitive Edition",
+      "cover": "https://gaming-cdn.com/images/products/6970/orig/mafia-definitive-edition-definitive-edition-pc-jeu-steam-europe-cover.jpg?v=1704899872",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743071800",
       "name": "Marvel's Spider-Man: Miles Morales",
       "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/PRfYtTZQsuj3ALrBXGL8MjAH.jpg",
