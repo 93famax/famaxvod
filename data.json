@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743502578",
+      "name": "LEGO Indiana Jones The Original Adventures",
+      "cover": "https://www.thevideogamecompany.com/cdn/shop/products/lego-indiana-jones-the-original-adventures-nintendo-wii-023272333638-cover-art.jpg?crop=center&height=1200&v=1659549018&width=1200",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743469729",
       "name": "LEGO® Pirates des Caraïbes",
       "cover": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/wii_24/SI_Wii_LegoPiratesoftheCaribbean_frFR_image1600w.jpg",
