@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743314631",
+      "name": "The Lego Movie Video Game",
+      "cover": "https://image.api.playstation.com/cdn/UP1018/CUSA00084_00/bCOzV5ds0qFGVKpuwyMa4qUgd9dgUQB6.png",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743218677",
       "name": "Mafia III: Definitive Edition",
       "cover": "https://store-images.s-microsoft.com/image/apps.19050.71189044859921004.2f5f4865-c27c-4313-976b-c3322734813b.84db885c-96d6-45a8-9de0-32ac9824a54d",
