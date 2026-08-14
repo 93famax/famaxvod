@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743365431",
+      "name": "LEGO® Jurassic World™",
+      "cover": "https://image.api.playstation.com/cdn/UP1018/CUSA01673_00/oTERelskSGPNIrjp0flCQLUvFnIX09de.png",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743314631",
       "name": "The Lego Movie Video Game",
       "cover": "https://image.api.playstation.com/cdn/UP1018/CUSA00084_00/bCOzV5ds0qFGVKpuwyMa4qUgd9dgUQB6.png",
