@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743435090",
+      "name": "Lego Star Wars: The Complete Saga",
+      "cover": "https://m.media-amazon.com/images/I/71AmDUsG2EL.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786743365431",
       "name": "LEGO® Jurassic World™",
       "cover": "https://image.api.playstation.com/cdn/UP1018/CUSA01673_00/oTERelskSGPNIrjp0flCQLUvFnIX09de.png",
