@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786743071800",
+      "name": "Marvel's Spider-Man: Miles Morales",
+      "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/PRfYtTZQsuj3ALrBXGL8MjAH.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786742793714",
       "name": "Marvel's Spider-Man 2",
       "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg",
