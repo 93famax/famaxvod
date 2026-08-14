@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786742793714",
+      "name": "Marvel's Spider-Man 2",
+      "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786742765570",
       "name": "Marvel's Spider-Man",
       "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202011/0402/C784xeOFo2wViCf4m5bxgoeH.png",
