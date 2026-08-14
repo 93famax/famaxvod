@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1786742765570",
+      "name": "Marvel's Spider-Man",
+      "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202011/0402/C784xeOFo2wViCf4m5bxgoeH.png",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786486930120",
       "name": "Ghost of tsushima",
       "cover": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Ghost_of_Tsushima.jpg/250px-Ghost_of_Tsushima.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
