@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1787597028565",
+      "name": "GTA SAN ANDREAS",
+      "cover": "https://static.wikia.nocookie.net/gta/images/8/83/Jaquette_de_GTA_SA.jpg/revision/latest/scale-to-width-down/1200?cb=20211203101455&path-prefix=fr",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1786995793314",
       "name": "Grand Theft Auto Vice City",
       "cover": "https://static.wikia.nocookie.net/gta/images/6/64/Gtavc-boxart.jpg/revision/latest?cb=20230914144220&path-prefix=fr",
@@ -167,6 +174,7 @@
     "manual_1786301034725": "https://www.youtube.com/watch?v=PWbrbyFr5c4&t=8678s",
     "manual_1786301070670": "https://www.youtube.com/watch?v=85IRGXZls9s&t=10s",
     "manual_1786486930120": "https://www.youtube.com/watch?v=N7X8FPP2LSY&list=PLMpsM_LxzL1s&index=9",
-    "manual_1786995793314": "https://www.youtube.com/watch?v=NAghC_yJ8a4"
+    "manual_1786995793314": "https://www.youtube.com/watch?v=NAghC_yJ8a4",
+    "manual_1787597028565": "https://www.youtube.com/watch?v=Vu15Z-Ps8vE"
   }
 }
