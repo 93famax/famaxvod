@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1790279833565",
+      "name": "GTA 4",
+      "cover": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/b7/Grand_Theft_Auto_IV_cover.jpg/250px-Grand_Theft_Auto_IV_cover.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1789066279383",
       "name": "Bully",
       "cover": "https://static.wikia.nocookie.net/canis-canem-edit/images/1/15/Bully_Scholarship_Edition03.jpg/revision/latest?cb=20200319155035&path-prefix=fr",
@@ -184,6 +191,7 @@
     "manual_1786995793314": "https://www.youtube.com/watch?v=NAghC_yJ8a4",
     "manual_1787597028565": "https://www.youtube.com/watch?v=Vu15Z-Ps8vE",
     "manual_1789066060498": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s",
-    "manual_1789066279383": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s"
+    "manual_1789066279383": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s",
+    "manual_1790279833565": "https://www.youtube.com/watch?v=KCWVUOjL1yY&list=PLKr5Zj1973iI"
   }
 }
