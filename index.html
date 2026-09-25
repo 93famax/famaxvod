@@ -356,23 +356,17 @@ async function ghWrite(data, sha){
 
 /* ── LOAD DATA ── */
 async function load(){
-  /* Always try GitHub raw first (works for viewers without token) */
-  const c=getGhConfig();
-  let loaded=false;
-  if(c.user&&c.repo){
-    try{
-      const url=`https://raw.githubusercontent.com/${c.user}/${c.repo}/main/${DATA_FILE}?t=${Date.now()}`;
-      const r=await fetch(url);
-      if(r.ok){
-        const d=await r.json();
-        games=d.games||[]; ytLinks=d.yt||{};
-        loaded=true;
-      }
-    }catch(e){}
-  }
-  if(!loaded){
-    /* fallback localStorage (first time before GitHub setup) */
-    try{const d=JSON.parse(localStorage.getItem("famax_local")||"null");if(d){games=d.games||[];ytLinks=d.yt||{};}}catch(e){}
+  // URL codée en dur — marche sur tous les appareils sans localStorage
+  const GITHUB_RAW = "https://raw.githubusercontent.com/93famax/famaxvod/main/data.json";
+  try{
+    const r=await fetch(GITHUB_RAW+"?t="+Date.now());
+    if(r.ok){
+      const d=await r.json();
+      games=d.games||[]; ytLinks=d.yt||{};
+    }
+  }catch(e){
+    // fallback localStorage
+    try{const d=JSON.parse(localStorage.getItem("famax_local")||"null");if(d){games=d.games||[];ytLinks=d.yt||{};}}catch(e2){}
   }
   render();
 }
