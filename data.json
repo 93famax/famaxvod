@@ -1,7 +1,7 @@
 {
   "games": [
     {
-      "id": "manual_1791998516161",
+      "id": "manual_1791998688477",
       "name": "MAX PAYNE 3",
       "cover": "https://upload.wikimedia.org/wikipedia/commons/2/21/Max_Payne_3_Cover.jpg?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original",
       "genres": [],
@@ -200,6 +200,6 @@
     "manual_1789066060498": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s",
     "manual_1789066279383": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s",
     "manual_1790280062344": "https://www.youtube.com/watch?v=-oR7iHMNOeA&list=PLKr5Zj1973iI&index=3",
-    "manual_1791998516161": "https://www.youtube.com/watch?v=2dPDQTP5ij4&t=23s"
+    "manual_1791998688477": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc"
   }
 }
