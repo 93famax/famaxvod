@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1792356347470",
+      "name": "MAX PAYNE 3",
+      "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWZgYmq9-TILmGNGDhURUuyWpph-r2SKco7q4vz-Iflg&s=10",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1792356284964",
       "name": "L.A NOIRE",
       "cover": "https://store-images.s-microsoft.com/image/apps.13980.69095560519858550.5d2b20be-2871-44c4-93ce-87fe09dc751d.284a700f-2df8-49e9-a5e3-9a42bae48002",
@@ -215,6 +222,7 @@
     "manual_1789066279383": "https://www.youtube.com/watch?v=tvlgxyNnCD8&t=2s",
     "manual_1790280062344": "https://www.youtube.com/watch?v=-oR7iHMNOeA&list=PLKr5Zj1973iI&index=3",
     "manual_1791998688477": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc",
-    "manual_1792356284964": "https://www.youtube.com/watch?v=GAXHXoFuxm0&list=PLFdK2WSW_Mn0"
+    "manual_1792356284964": "https://www.youtube.com/watch?v=GAXHXoFuxm0&list=PLFdK2WSW_Mn0",
+    "manual_1792356347470": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc&index=2"
   }
 }
