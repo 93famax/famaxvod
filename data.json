@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1793387178270",
+      "name": "INSIDE",
+      "cover": "https://m.media-amazon.com/images/M/MV5BNzNkZDc4ZjAtYWNlMy00MDI0LTg4YWUtNGQ0ZGZhM2MxZWY2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1792356347470",
       "name": "MAX PAYNE 3",
       "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWZgYmq9-TILmGNGDhURUuyWpph-r2SKco7q4vz-Iflg&s=10",
@@ -216,6 +223,7 @@
     "manual_1790280062344": "https://www.youtube.com/watch?v=-oR7iHMNOeA&list=PLKr5Zj1973iI&index=3",
     "manual_1791998688477": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc",
     "manual_1792356284964": "https://www.youtube.com/watch?v=GAXHXoFuxm0&list=PLFdK2WSW_Mn0",
-    "manual_1792356347470": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc&index=2"
+    "manual_1792356347470": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc&index=2",
+    "manual_1793387178270": "https://www.youtube.com/watch?v=q5-zuO7oRfg&list=PLTvjaHZ-jGWg&index=2"
   }
 }
