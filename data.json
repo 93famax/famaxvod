@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "id": "manual_1795089770079",
+      "name": "GTA 6",
+      "cover": "https://upload.wikimedia.org/wikipedia/en/4/46/Grand_Theft_Auto_VI.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "genres": [],
+      "year": ""
+    },
+    {
       "id": "manual_1794750466615",
       "name": "CAIRN",
       "cover": "https://image.api.playstation.com/vulcan/ap/rnd/202502/2009/7c79fdb4b0dd99bf189d5fde6ad468635e14d03fc7819388.png",
@@ -232,6 +239,7 @@
     "manual_1792356284964": "https://www.youtube.com/watch?v=GAXHXoFuxm0&list=PLFdK2WSW_Mn0",
     "manual_1792356347470": "https://www.youtube.com/watch?v=2dPDQTP5ij4&list=PLKgVT-PsUlSc&index=2",
     "manual_1793387295114": "https://www.youtube.com/watch?v=q5-zuO7oRfg&list=PLTvjaHZ-jGWg&index=2",
-    "manual_1794750466615": "https://www.youtube.com/watch?v=NQ7M3XOwRT8&t=1910s"
+    "manual_1794750466615": "https://www.youtube.com/watch?v=NQ7M3XOwRT8&t=1910s",
+    "manual_1795089770079": "https://www.youtube.com/watch?v=ycxpDPxOBqA&t=3s"
   }
 }
